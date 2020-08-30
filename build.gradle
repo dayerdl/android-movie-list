@@ -5,8 +5,22 @@ buildscript {
         google()
         jcenter()
     }
+
+    ext {
+        // Sdk and tools
+        compileSdkVersion = 28
+        minSdkVersion = 21
+        targetSdkVersion = 28
+
+        // App dependencies
+        retrofitVersion = '2.9.0'
+        rxjava = "2.2.6"
+        rxandroid = "2.1.0"
+        gradleVersion = '4.0.1'
+    }
+
     dependencies {
-        classpath "com.android.tools.build:gradle:4.0.1"
+        classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
