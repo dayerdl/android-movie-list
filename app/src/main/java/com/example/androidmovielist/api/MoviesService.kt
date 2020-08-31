@@ -1,9 +1,12 @@
 package com.example.androidmovielist.api
 
+import com.example.androidmovielist.model.ListResponseBean
 import com.example.androidmovielist.model.TopRated
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -12,14 +15,16 @@ import retrofit2.http.Query
 
 interface MoviesService {
 
-    @GET("top_rated?api_key=07473a01a734d6aa462ef4b401276805&language=en-US")
-    fun getTopRatedMovies(@Query("page") page: Int): Single<TopRated>
+    @GET("movie/top_rated")
+    fun getTopRatedMovies(
+        @Query("page") page: Int = 1,
+        @Query("api_key") apiKey: String = "07473a01a734d6aa462ef4b401276805"
+    ): Single<TopRated>
 
     companion object {
-        var BASE_URL =
-            "https://api.themoviedb.org/3/movie/"
+        private var BASE_URL = "https://api.themoviedb.org/3/"
         private var retrofit: Retrofit? = null
-        fun getClient(): Retrofit? {
+        fun getClient(): Retrofit {
             val interceptor = HttpLoggingInterceptor()
             interceptor.apply { interceptor.level = HttpLoggingInterceptor.Level.BODY }
             val client = OkHttpClient.Builder()
@@ -30,9 +35,10 @@ interface MoviesService {
                     .baseUrl(BASE_URL)
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build()
             }
-            return retrofit
+            return retrofit!!
         }
     }
 
