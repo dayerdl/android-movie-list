@@ -8,11 +8,11 @@ class MoviesListViewModel constructor(private val repository: MoviesListReposito
 
     fun loadMoviesList() {
         //public final Disposable subscribe(final Consumer<? super T> onSuccess, final Consumer<? super Throwable> onError) {
-        val disposable = repository.loadMovieList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe { item ->  println("item $item")}
-        disposable.dispose()
-
-// println("item $item")
+        val disposable = repository.loadMovieList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+//            .map { item -> item.results.size }
+            .subscribe { item ->  println("Total size is $item")}
     }
 
 }

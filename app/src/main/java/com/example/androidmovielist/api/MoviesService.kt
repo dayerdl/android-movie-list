@@ -3,6 +3,8 @@ package com.example.androidmovielist.api
 import com.example.androidmovielist.model.ListResponseBean
 import com.example.androidmovielist.model.TopRated
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import io.reactivex.Observable
+import io.reactivex.Observer
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,7 +21,7 @@ interface MoviesService {
     fun getTopRatedMovies(
         @Query("page") page: Int = 1,
         @Query("api_key") apiKey: String = "07473a01a734d6aa462ef4b401276805"
-    ): Single<TopRated>
+    ): Observable<TopRated>
 
     companion object {
         private var BASE_URL = "https://api.themoviedb.org/3/"
