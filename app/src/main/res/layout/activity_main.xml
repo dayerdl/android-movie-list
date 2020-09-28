@@ -19,6 +19,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listOfMovies"
+        android:background="@color/colorAccent"
         android:layout_width="409dp"
         android:layout_height="648dp"
         app:layout_constraintBottom_toBottomOf="parent"
