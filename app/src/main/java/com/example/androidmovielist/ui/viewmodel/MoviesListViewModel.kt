@@ -16,7 +16,6 @@ class MoviesListViewModel constructor(private val repository: MoviesListReposito
         mutableMovieList
     }
 
-
     fun loadMoviesList() {
         repository.loadTopMovies()
             .subscribeOn(Schedulers.io())

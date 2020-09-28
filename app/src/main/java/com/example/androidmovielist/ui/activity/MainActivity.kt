@@ -1,6 +1,7 @@
 package com.example.androidmovielist.ui.activity
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,11 +11,13 @@ import com.example.androidmovielist.ui.viewmodel.MoviesListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val viewModel = MoviesListViewModel()
+        val viewModel: MoviesListViewModel by viewModels()
 
         listOfMovies.layoutManager = LinearLayoutManager(this.baseContext, LinearLayoutManager.VERTICAL, false)
         viewModel.movieList.observe(this, Observer {
