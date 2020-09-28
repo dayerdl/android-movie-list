@@ -1,7 +1,7 @@
 package com.example.androidmovielist.data
 
-import com.example.androidmovielist.api.MoviesService
-import com.example.androidmovielist.model.TopRated
+import com.example.androidmovielist.data.api.MoviesService
+import com.example.androidmovielist.data.model.TopRated
 import io.reactivex.Observable
 import io.reactivex.Single
 

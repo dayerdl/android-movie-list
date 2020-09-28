@@ -1,9 +1,9 @@
-package com.example.androidmovielist
+package com.example.androidmovielist.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.androidmovielist.api.MoviesService
-import com.example.androidmovielist.movielist.MoviesListViewModel
+import com.example.androidmovielist.R
+import com.example.androidmovielist.ui.viewmodel.MoviesListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -14,5 +14,7 @@ class MainActivity : AppCompatActivity() {
         val viewModel = MoviesListViewModel()
 
         button.setOnClickListener { viewModel.loadMoviesList() }
+
+        listOfMovies.adapter =
     }
 }

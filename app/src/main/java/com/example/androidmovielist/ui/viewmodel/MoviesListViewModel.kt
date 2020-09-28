@@ -1,4 +1,4 @@
-package com.example.androidmovielist.movielist
+package com.example.androidmovielist.ui.viewmodel
 
 import com.example.androidmovielist.data.MoviesListRepository
 import io.reactivex.android.schedulers.AndroidSchedulers

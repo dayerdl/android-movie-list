@@ -1,4 +1,4 @@
-package com.example.androidmovielist.model
+package com.example.androidmovielist.data.model
 
 import com.google.gson.annotations.SerializedName
 

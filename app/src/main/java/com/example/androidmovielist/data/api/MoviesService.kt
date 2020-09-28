@@ -1,14 +1,10 @@
-package com.example.androidmovielist.api
+package com.example.androidmovielist.data.api
 
-import com.example.androidmovielist.model.ListResponseBean
-import com.example.androidmovielist.model.TopRated
+import com.example.androidmovielist.data.model.TopRated
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET

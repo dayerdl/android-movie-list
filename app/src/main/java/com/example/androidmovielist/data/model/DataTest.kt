@@ -1,4 +1,4 @@
-package com.example.androidmovielist.model
+package com.example.androidmovielist.data.model
 
 
 import java.io.Serializable
