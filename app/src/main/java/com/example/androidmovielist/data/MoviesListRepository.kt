@@ -1,6 +1,7 @@
 package com.example.androidmovielist.data
 
 import com.example.androidmovielist.data.api.MoviesService
+import com.example.androidmovielist.data.model.Movie
 import com.example.androidmovielist.data.model.TopRatedResults
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -12,7 +13,7 @@ class MoviesListRepository {
         return Single.fromObservable(service.getTopRatedMovies(1))
     }
 
-    fun loadMoviesListObserver() : Observable<TopRatedResults> {
-        return service.getTopRatedMovies()
-    }
+//    fun loadFavouriteMovies(): Single<List<Movie>> {
+//        return Single.just(arrayListOf(null))
+//    }
 }
