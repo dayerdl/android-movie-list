@@ -10,7 +10,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class MoviesListViewModel constructor(private val service: MoviesService = MoviesService.getClient().create(MoviesService::class.java),
-                                      private val repository: MoviesListRepository = MoviesListRepository(service)) :
+                                      private val repository: MoviesListRepository = MoviesListRepository()) :
     ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
