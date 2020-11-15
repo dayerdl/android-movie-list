@@ -5,8 +5,9 @@ import com.example.androidmovielist.data.api.MoviesService
 
 object AppResolver {
 
-    private val service = MoviesService.getClient().create(MoviesService::class.java)
+    fun provideMovieSource(apiManager: MoviesService.Companion) = apiManager.getClient().create(MoviesService::class.java)
 
-    fun provideMoviesRepository() = MoviesListRepository(service)
+    fun provideMoviesRepository(service: MoviesService) = MoviesListRepository(service)
+
 
 }

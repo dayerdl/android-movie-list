@@ -2,12 +2,19 @@ package com.example.androidmovielist.di
 
 import android.app.Activity
 import androidx.lifecycle.ViewModelStoreOwner
+import com.example.androidmovielist.data.api.MoviesService
 import com.example.androidmovielist.ui.viewmodel.MoviesListViewModel
 
 object Injector {
 
+    private val network = MoviesService
+
+    private val movieSource by lazy {
+        AppResolver.provideMovieSource(network)
+    }
+
     private val repository by lazy {
-        AppResolver.provideMoviesRepository()
+        AppResolver.provideMoviesRepository(movieSource)
     }
 
     private val detailMoviesListFactory by lazy {

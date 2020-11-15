@@ -1,9 +1,8 @@
-package com.example.androidmovielist.di
+package com.example.androidmovielist.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.androidmovielist.data.MoviesListRepository
-import com.example.androidmovielist.ui.viewmodel.MoviesListViewModel
 
 class MoviesListViewModelFactory(private val repository: MoviesListRepository) : ViewModelProvider.Factory {
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.example.androidmovielist.data.MoviesListRepository
 import com.example.androidmovielist.ui.viewmodel.MoviesListViewModel
+import com.example.androidmovielist.ui.viewmodel.MoviesListViewModelFactory
 
 object ViewModelResolver {
 
