@@ -4,13 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.androidmovielist.data.MoviesListRepository
-import com.example.androidmovielist.data.api.MoviesService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class MoviesListViewModel constructor(private val service: MoviesService = MoviesService.getClient().create(MoviesService::class.java),
-                                      private val repository: MoviesListRepository = MoviesListRepository()) :
+class MoviesListViewModel constructor(private val repository: MoviesListRepository) :
     ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()

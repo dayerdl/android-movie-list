@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidmovielist.R
+import com.example.androidmovielist.di.Injector
 import com.example.androidmovielist.ui.MovieListAdapter
 import com.example.androidmovielist.ui.MovieRowViewHolderCallBack
 import com.example.androidmovielist.ui.viewmodel.MoviesListViewModel
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity(), MovieRowViewHolderCallBack {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val viewModel: MoviesListViewModel by viewModels()
+        val viewModel = Injector.moviesViewModel(this)
 
         listOfMovies.layoutManager = LinearLayoutManager(this.baseContext, LinearLayoutManager.VERTICAL, false)
         viewModel.movieList.observe(this, Observer {
