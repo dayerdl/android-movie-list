@@ -1,7 +1,6 @@
 package com.example.androidmovielist.ui.activity
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,7 +8,6 @@ import com.example.androidmovielist.R
 import com.example.androidmovielist.di.Injector
 import com.example.androidmovielist.ui.MovieListAdapter
 import com.example.androidmovielist.ui.MovieRowViewHolderCallBack
-import com.example.androidmovielist.ui.viewmodel.MoviesListViewModel
 import com.example.androidmovielist.ui.viewmodel.MoviesRowViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 

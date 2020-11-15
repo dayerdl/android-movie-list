@@ -7,7 +7,7 @@ import com.example.androidmovielist.ui.viewmodel.MoviesListViewModel
 
 object Injector {
 
-    private val network = MoviesService
+    private val network = NetworkResolver.provideNetwork()
 
     private val movieSource by lazy {
         AppResolver.provideMovieSource(network)
