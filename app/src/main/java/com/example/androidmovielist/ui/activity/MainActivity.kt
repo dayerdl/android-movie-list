@@ -25,8 +25,10 @@ class MainActivity : AppCompatActivity(), MovieRowViewHolderCallBack {
             (listOfMovies.adapter as MovieListAdapter).notifyDataSetChanged()
         })
 
-        load_movies_button.setOnClickListener { viewModel.loadMoviesList() }
-
+        load_movies_button.setOnClickListener {
+            viewModel.loadMoviesList()
+            viewModel.loadDetailsFirstTopRatedMovie()
+        }
     }
 
     override fun clickOnFavouriteItem(item: MoviesRowViewModel) {

@@ -33,6 +33,19 @@ class MoviesListViewModel constructor(private val repository: MoviesListReposito
         )
     }
 
+    fun loadDetailsFirstTopRatedMovie(){
+        compositeDisposable.add(repository.loadTopMovies()
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .map { results -> results.results.first()}
+            .flatMap { repository.loadMovieDetails(it.id) }
+            .subscribe { item ->
+                println("ZAXA----> $item")
+            }
+        )
+
+    }
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
