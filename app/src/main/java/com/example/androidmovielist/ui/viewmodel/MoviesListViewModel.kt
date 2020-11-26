@@ -7,8 +7,9 @@ import com.example.androidmovielist.data.MoviesListRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class MoviesListViewModel constructor(private val repository: MoviesListRepository) :
+class MoviesListViewModel @Inject constructor(private val repository: MoviesListRepository) :
     ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
