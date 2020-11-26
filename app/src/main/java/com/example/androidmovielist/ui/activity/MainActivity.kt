@@ -1,5 +1,6 @@
 package com.example.androidmovielist.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -9,6 +10,7 @@ import com.example.androidmovielist.di.Injector
 import com.example.androidmovielist.ui.MovieListAdapter
 import com.example.androidmovielist.ui.MovieRowViewHolderCallBack
 import com.example.androidmovielist.ui.viewmodel.MoviesRowViewModel
+import com.example.moviedetail.MovieDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MovieRowViewHolderCallBack {
@@ -28,6 +30,11 @@ class MainActivity : AppCompatActivity(), MovieRowViewHolderCallBack {
         load_movies_button.setOnClickListener {
             viewModel.loadMoviesList()
             viewModel.loadDetailsFirstTopRatedMovie()
+        }
+
+        fav_button.setOnClickListener {
+            val intentMovieDetails = Intent(this, MovieDetailActivity::class.java)
+            startActivity(intentMovieDetails)
         }
     }
 

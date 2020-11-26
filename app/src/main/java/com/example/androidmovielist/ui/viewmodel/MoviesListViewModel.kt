@@ -3,12 +3,12 @@ package com.example.androidmovielist.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.androidmovielist.data.MoviesListRepository
+import com.example.androidmovielist.data.MoviesRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class MoviesListViewModel constructor(private val repository: MoviesListRepository) :
+class MoviesListViewModel constructor(private val repository: MoviesRepository) :
     ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()

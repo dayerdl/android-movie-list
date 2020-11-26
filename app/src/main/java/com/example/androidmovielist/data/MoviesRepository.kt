@@ -3,15 +3,18 @@ package com.example.androidmovielist.data
 import com.example.androidmovielist.data.api.MoviesService
 import com.example.androidmovielist.data.model.Movie
 import com.example.androidmovielist.data.model.TopRatedResults
+import com.example.domain.movies.IMovie
+import com.example.domain.movies.IMoviesRepository
+import com.example.domain.movies.ITopRatedResults
 import io.reactivex.Single
 
-class MoviesListRepository(private val service: MoviesService) {
+class MoviesRepository(private val service: MoviesService): IMoviesRepository {
 
-    fun loadTopMovies(): Single<TopRatedResults> {
+    override fun loadTopMovies(): Single<ITopRatedResults> {
         return Single.fromObservable(service.getTopRatedMovies(1))
     }
 
-    fun loadMovieDetails(movieId: Int): Single<Movie> {
+    override fun loadMovieDetails(movieId: Int): Single<IMovie> {
         return Single.fromObservable(service.getMovieDetails(movieId))
     }
 

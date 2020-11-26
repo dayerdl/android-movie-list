@@ -13,7 +13,7 @@ object Injector {
         AppResolver.provideMovieSource(network)
     }
 
-    private val repository by lazy {
+    val repository by lazy {
         AppResolver.provideMoviesRepository(movieSource)
     }
 

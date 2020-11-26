@@ -37,6 +37,9 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':moviedetail')
+    implementation project(path: ':injector')
+    implementation project(path: ':domain')
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
