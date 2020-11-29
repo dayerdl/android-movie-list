@@ -1,2 +1,4 @@
+include ':movieDetail'
+include ':domainLayer'
 include ':app'
 rootProject.name = "AndroidMovieList"

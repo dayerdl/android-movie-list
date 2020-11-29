@@ -1,19 +1,20 @@
 package com.example.androidmovielist.data
 
 import com.example.androidmovielist.data.api.MoviesApiManager
-import com.example.androidmovielist.data.api.MoviesServiceApi
-import com.example.androidmovielist.data.model.Movie
-import com.example.androidmovielist.data.model.TopRatedResults
+import com.example.domainlayer.IMovie
+import com.example.domainlayer.IMoviesRepository
+import com.example.domainlayer.ITopRatedResults
 import io.reactivex.Single
 import javax.inject.Inject
 
-class MoviesListRepository @Inject constructor(private val serviceApi: MoviesApiManager) {
+class MoviesListRepository @Inject constructor(private val serviceApi: MoviesApiManager):
+    IMoviesRepository {
 
-    fun loadTopMovies(): Single<TopRatedResults> {
+    override fun loadTopMovies(): Single<ITopRatedResults> {
         return Single.fromObservable(serviceApi.provideApiManager().getTopRatedMovies(1))
     }
 
-    fun loadMovieDetails(movieId: Int): Single<Movie> {
+    override fun loadMovieDetails(movieId: Int): Single<IMovie> {
         return Single.fromObservable(serviceApi.provideApiManager().getMovieDetails(movieId))
     }
 
