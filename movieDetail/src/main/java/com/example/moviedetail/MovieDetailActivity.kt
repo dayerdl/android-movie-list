@@ -11,7 +11,8 @@ import javax.inject.Inject
 
 class MovieDetailActivity : DaggerAppCompatActivity() {
 
-    @Inject lateinit var repository: IMoviesRepository
+    @Inject
+    lateinit var repository: IMoviesRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

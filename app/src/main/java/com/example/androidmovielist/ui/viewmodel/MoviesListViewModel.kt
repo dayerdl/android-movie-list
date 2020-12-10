@@ -25,7 +25,7 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesList
             .observeOn(AndroidSchedulers.mainThread())
             .map { result ->
                 result.results.map { item ->
-                    MoviesRowViewModel("", item.title, item.vote_average.toString(), true)
+                    MoviesRowViewModel(item., item.title, item.vote_average.toString(), false)
                 }
             }
             .subscribe { item ->
