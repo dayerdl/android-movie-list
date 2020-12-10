@@ -8,14 +8,12 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.androidmovielist.R
+import com.example.androidmovielist.di.Injector
 import com.example.androidmovielist.ui.MovieListAdapter
 import com.example.androidmovielist.ui.MovieRowViewHolderCallBack
-import com.example.androidmovielist.ui.viewmodel.MoviesListViewModel
 import com.example.androidmovielist.ui.viewmodel.MoviesRowViewModel
 import com.example.moviedetail.MovieDetailActivity
-import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -28,6 +26,8 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack, Swip
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         swiperefresh.setOnRefreshListener(this)
+
+        val viewModel = Injector.moviesViewModel(this)
 
         listOfMovies.layoutManager = LinearLayoutManager(this.baseContext, LinearLayoutManager.VERTICAL, false)
         viewModel.movieList.observe(this, Observer {

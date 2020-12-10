@@ -1,6 +1,6 @@
 package com.example.androidmovielist.data.model
 
-import com.example.domainlayer.IMovie
+import com.example.domain.movies.IMovie
 import com.google.gson.annotations.SerializedName
 
 data class Movie (
@@ -18,4 +18,4 @@ data class Movie (
     @SerializedName("vote_average") override val vote_average : Double,
     @SerializedName("overview") override val overview : String,
     @SerializedName("release_date") override val release_date : String
-) : IMovie
+): IMovie

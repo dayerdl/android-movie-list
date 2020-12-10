@@ -1,20 +1,16 @@
 package com.example.androidmovielist
 
+import android.app.Application
 import androidx.room.Room
 import com.example.androidmovielist.data.database.AppDatabase
-import com.example.androidmovielist.di.DaggerAppComponent
-import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
+import com.example.injector.Injector
+import com.example.moviedetail.MovieDetailActivity
 
-class MoviesApplication : DaggerApplication() {
+class MoviesApplication : Application(), Injector {
 
     override fun onCreate() {
         super.onCreate()
         createDataBase()
-    }
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.create()
     }
 
     private fun createDataBase() {
@@ -22,5 +18,13 @@ class MoviesApplication : DaggerApplication() {
             applicationContext,
             AppDatabase::class.java, "movies"
         ).build()
+    }
+
+    override fun inject(any: Any) {
+        when(any) {
+            is MovieDetailActivity -> {
+                any.moviesRepository = com.example.androidmovielist.di.Injector.repository
+            }
+        }
     }
 }
