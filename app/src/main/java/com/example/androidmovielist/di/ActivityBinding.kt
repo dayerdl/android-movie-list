@@ -8,8 +8,8 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBinding {
 
-//    @ContributesAndroidInjector(modules =[MoviesModuleRepository::class])
-//    abstract fun movieDetailActivity(): MovieDetailActivity
+    @ContributesAndroidInjector(modules =[MoviesModuleRepository::class])
+    abstract fun movieDetailActivity(): MovieDetailActivity
 
     @ContributesAndroidInjector()
     abstract fun mainActivity(): MainActivity

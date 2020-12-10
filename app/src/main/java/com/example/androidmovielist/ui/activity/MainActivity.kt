@@ -28,7 +28,7 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack, Swip
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         swiperefresh.setOnRefreshListener(this)
-        
+
         listOfMovies.layoutManager = LinearLayoutManager(this.baseContext, LinearLayoutManager.VERTICAL, false)
         viewModel.movieList.observe(this, Observer {
             listOfMovies.adapter = MovieListAdapter(it, this)
@@ -51,6 +51,10 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack, Swip
     }
 
     override fun clickOnFavouriteItem(item: MoviesRowViewModel) {
+        
+    }
+
+    override fun clickOnMovieItem(item: MoviesRowViewModel) {
         startActivity(Intent(this, MovieDetailActivity::class.java))
     }
 

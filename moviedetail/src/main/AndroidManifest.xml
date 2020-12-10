@@ -2,6 +2,6 @@
     package="com.example.moviedetail">
 
     <application>
-        <activity android:name=".MovieDetailActivity" />
+        <activity android:name=".di.MovieDetailActivity" />
     </application>
 </manifest>

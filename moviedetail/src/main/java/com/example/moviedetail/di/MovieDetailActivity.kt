@@ -11,25 +11,25 @@ import javax.inject.Inject
 
 class MovieDetailActivity : DaggerAppCompatActivity() {
 
-//    @Inject lateinit var repository: IMoviesRepository
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//        setContentView(R.layout.movie_detail)
-//
-//        button.setOnClickListener {
-//            CompositeDisposable().add(repository.loadTopMovies()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(Schedulers.io())
-//                .map { results -> results.results.first() }
-//                .flatMap { repository.loadMovieDetails(it.id) }
-//                .subscribe { item ->
-//                    println("ZAXA----> $item")
-//                }
-//            )
-//        }
-//
-//    }
+    @Inject lateinit var repository: IMoviesRepository
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.movie_detail)
+
+        button.setOnClickListener {
+            CompositeDisposable().add(repository.loadTopMovies()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .map { results -> results.results.first() }
+                .flatMap { repository.loadMovieDetails(it.id) }
+                .subscribe { item ->
+                    println("ZAXA----> $item")
+                }
+            )
+        }
+
+    }
 
 }

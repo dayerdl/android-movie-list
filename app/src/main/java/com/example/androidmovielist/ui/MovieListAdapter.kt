@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.movie_row.view.*
 
 interface MovieRowViewHolderCallBack {
     fun clickOnFavouriteItem(item: MoviesRowViewModel)
+    fun clickOnMovieItem(item: MoviesRowViewModel)
 }
 
 class MovieListAdapter(
