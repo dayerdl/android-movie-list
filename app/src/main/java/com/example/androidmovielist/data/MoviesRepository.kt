@@ -1,5 +1,6 @@
 package com.example.androidmovielist.data
 
+import com.example.androidmovielist.data.api.MoviesApiManager
 import com.example.androidmovielist.data.api.MoviesService
 import com.example.androidmovielist.data.model.Movie
 import com.example.androidmovielist.data.model.TopRatedResults
@@ -7,15 +8,16 @@ import com.example.domain.movies.IMovie
 import com.example.domain.movies.IMoviesRepository
 import com.example.domain.movies.ITopRatedResults
 import io.reactivex.Single
+import javax.inject.Inject
 
-class MoviesRepository(private val service: MoviesService): IMoviesRepository {
+class MoviesRepository @Inject constructor(private val service: MoviesApiManager): IMoviesRepository {
 
     override fun loadTopMovies(): Single<ITopRatedResults> {
-        return Single.fromObservable(service.getTopRatedMovies(1))
+        return Single.fromObservable(service.provideApiManager().getTopRatedMovies(1))
     }
 
     override fun loadMovieDetails(movieId: Int): Single<IMovie> {
-        return Single.fromObservable(service.getMovieDetails(movieId))
+        return Single.fromObservable(service.provideApiManager().getMovieDetails(movieId))
     }
 
 }

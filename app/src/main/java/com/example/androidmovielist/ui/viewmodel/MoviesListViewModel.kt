@@ -7,8 +7,9 @@ import com.example.androidmovielist.data.MoviesRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class MoviesListViewModel constructor(private val repository: MoviesRepository) :
+class MoviesListViewModel @Inject constructor(private val repository: MoviesRepository) :
     ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -24,7 +25,7 @@ class MoviesListViewModel constructor(private val repository: MoviesRepository) 
             .observeOn(AndroidSchedulers.mainThread())
             .map { result ->
                 result.results.map { item ->
-                    MoviesRowViewModel(item., item.title, item.vote_average.toString(), false)
+                    MoviesRowViewModel(item.backdrop_path, item.title, item.vote_average.toString(), false)
                 }
             }
             .subscribe { item ->

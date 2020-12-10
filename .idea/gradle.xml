@@ -14,7 +14,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/injector" />
-            <option value="$PROJECT_DIR$/moviedetail" />
+            <option value="$PROJECT_DIR$/movieDetail" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
