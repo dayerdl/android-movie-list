@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.androidmovielist.R
 import com.example.androidmovielist.ui.MovieListAdapter
+import com.example.androidmovielist.ui.MovieListAdapter2
 import com.example.androidmovielist.ui.MovieRowViewHolderCallBack
 import com.example.androidmovielist.ui.viewmodel.MoviesListViewModel
 import com.example.androidmovielist.ui.viewmodel.MoviesRowViewModel
@@ -30,16 +31,18 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack, Swip
         swiperefresh.setOnRefreshListener(this)
 
         listOfMovies.layoutManager = LinearLayoutManager(this.baseContext, LinearLayoutManager.VERTICAL, false)
-        viewModel.movieList.observe(this, Observer {
-            listOfMovies.adapter = MovieListAdapter(it, this)
-            (listOfMovies.adapter as MovieListAdapter).notifyDataSetChanged()
-            progressBar.hide()
-            swiperefresh.isRefreshing = false
-        })
+        val adapter = MovieListAdapter2(this)
+        listOfMovies.adapter = adapter
+
+//        viewModel.movieList.observe(this, Observer {
+//            (listOfMovies.adapter as MovieListAdapter2).notifyDataSetChanged()
+//            progressBar.hide()
+//            swiperefresh.isRefreshing = false
+//        })
+        viewModel.movieList.observe(this, Observer { adapter.submitList(it) })
 
         progressBar.display()
-        viewModel.loadMoviesList()
-        viewModel.loadDetailsFirstTopRatedMovie()
+        viewModel.loadConfiguration()
 
         setupToolBar()
 
@@ -51,7 +54,7 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack, Swip
     }
 
     override fun clickOnFavouriteItem(item: MoviesRowViewModel) {
-        
+
     }
 
     override fun clickOnMovieItem(item: MoviesRowViewModel) {

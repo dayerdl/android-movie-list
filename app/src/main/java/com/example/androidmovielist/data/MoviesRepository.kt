@@ -1,9 +1,6 @@
 package com.example.androidmovielist.data
 
 import com.example.androidmovielist.data.api.MoviesApiManager
-import com.example.androidmovielist.data.api.MoviesService
-import com.example.androidmovielist.data.model.Movie
-import com.example.androidmovielist.data.model.TopRatedResults
 import com.example.domain.movies.IMovie
 import com.example.domain.movies.IMoviesRepository
 import com.example.domain.movies.ITopRatedResults

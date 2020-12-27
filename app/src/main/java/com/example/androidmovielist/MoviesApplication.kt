@@ -18,7 +18,7 @@ class MoviesApplication : DaggerApplication() {
     }
 
     private fun createDataBase() {
-        val db = Room.databaseBuilder(
+        Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "movies"
         ).build()
