@@ -23,7 +23,7 @@ class MoviesRepository @Inject constructor(private val service: MoviesApiManager
         cache.insertMovie(movie)
     }
 
-    fun loadMovies(): Single<List<LocalMovie>> {
+    fun loadUserSavedMovies(): Single<List<LocalMovie>> {
         return Single.fromObservable(Observable.fromArray(cache.loadMovies()))
     }
 }

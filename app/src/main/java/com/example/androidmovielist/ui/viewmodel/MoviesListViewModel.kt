@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.androidmovielist.data.MoviesRepository
+import com.example.androidmovielist.data.database.LocalMovie
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -55,6 +56,22 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
 
     fun onFavouritePressed() {
         mutableFavouriteToggle.postValue(!(mutableFavouriteToggle.value as Boolean))
+    }
+
+    fun save(item: MoviesRowViewModel) {
+        val movie = LocalMovie(Math.random().toInt(), item.title, "dummy")
+        repository.saveMovie(movie)
+    }
+
+    fun loadFavourites() {
+        compositeDisposable.add(repository.loadUserSavedMovies()
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe { item ->
+                println("ZAXA----> $item")
+            }
+        )
+
     }
 
 }

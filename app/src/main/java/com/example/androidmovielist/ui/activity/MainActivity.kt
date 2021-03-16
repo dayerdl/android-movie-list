@@ -48,6 +48,7 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack,
         viewModel.favouriteToggle.observe(this, Observer {
             if (it == true) {
                 toolbar.menu.getItem(0).icon = ContextCompat.getDrawable(this, R.drawable.ic_love_filled)
+                viewModel.loadFavourites()
             } else {
                 toolbar.menu.getItem(0).icon = ContextCompat.getDrawable(this, R.drawable.ic_love)
             }
@@ -63,7 +64,7 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack,
     }
 
     override fun clickOnFavouriteItem(item: MoviesRowViewModel) {
-
+        viewModel.save(item)
     }
 
     override fun clickOnMovieItem(item: MoviesRowViewModel) {

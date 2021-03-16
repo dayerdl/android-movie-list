@@ -8,11 +8,11 @@ import androidx.room.RoomDatabase
 @Database(entities = [LocalMovie::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-    companion object{
+    companion object {
         private lateinit var instance: AppDatabase
 
         fun getInstance(applicationContext: Context): AppDatabase {
-            if(instance == null) {
+            if (instance == null) {
                 instance = Room.databaseBuilder(
                     applicationContext,
                     AppDatabase::class.java, "movies"
@@ -21,6 +21,7 @@ abstract class AppDatabase : RoomDatabase() {
             return instance
         }
     }
+
     abstract fun movieDao(): MovieDao
 
 }
