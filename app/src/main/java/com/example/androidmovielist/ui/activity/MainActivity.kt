@@ -51,7 +51,7 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack, Swip
     }
 
     override fun clickOnFavouriteItem(item: MoviesRowViewModel) {
-        
+            //test
     }
 
     override fun clickOnMovieItem(item: MoviesRowViewModel) {
