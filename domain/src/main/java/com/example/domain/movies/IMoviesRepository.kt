@@ -5,8 +5,8 @@ import io.reactivex.Single
 
 interface IMoviesRepository {
     fun loadTopMovies(): Single<ITopRatedResults>
-
     fun loadMovieDetails(movieId: Int): Single<IMovie>
+
 }
 
 interface ITopRatedResults {

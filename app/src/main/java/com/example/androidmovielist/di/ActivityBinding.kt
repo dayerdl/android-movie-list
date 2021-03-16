@@ -1,7 +1,9 @@
 package com.example.androidmovielist.di
 
+import com.example.androidmovielist.MoviesApplication
 import com.example.androidmovielist.ui.activity.MainActivity
 import com.example.moviedetail.di.MovieDetailActivity
+import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -13,5 +15,6 @@ abstract class ActivityBinding {
 
     @ContributesAndroidInjector()
     abstract fun mainActivity(): MainActivity
+
 
 }

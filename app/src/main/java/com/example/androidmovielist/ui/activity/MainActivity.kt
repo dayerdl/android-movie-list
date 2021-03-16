@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -19,17 +20,20 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack, SwipeRefreshLayout.OnRefreshListener,
+class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack,
+    SwipeRefreshLayout.OnRefreshListener,
     Toolbar.OnMenuItemClickListener {
 
-    @Inject lateinit var viewModel : MoviesListViewModel
+    @Inject
+    lateinit var viewModel: MoviesListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         swiperefresh.setOnRefreshListener(this)
 
-        listOfMovies.layoutManager = LinearLayoutManager(this.baseContext, LinearLayoutManager.VERTICAL, false)
+        listOfMovies.layoutManager =
+            LinearLayoutManager(this.baseContext, LinearLayoutManager.VERTICAL, false)
         viewModel.movieList.observe(this, Observer {
             listOfMovies.adapter = MovieListAdapter(it, this)
             (listOfMovies.adapter as MovieListAdapter).notifyDataSetChanged()
@@ -41,6 +45,14 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack, Swip
         viewModel.loadMoviesList()
         viewModel.loadDetailsFirstTopRatedMovie()
 
+        viewModel.favouriteToggle.observe(this, Observer {
+            if (it == true) {
+                toolbar.menu.getItem(0).icon = ContextCompat.getDrawable(this, R.drawable.ic_love_filled)
+            } else {
+                toolbar.menu.getItem(0).icon = ContextCompat.getDrawable(this, R.drawable.ic_love)
+            }
+        })
+
         setupToolBar()
 
     }
@@ -51,7 +63,7 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack, Swip
     }
 
     override fun clickOnFavouriteItem(item: MoviesRowViewModel) {
-            //test
+
     }
 
     override fun clickOnMovieItem(item: MoviesRowViewModel) {
@@ -65,12 +77,13 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack, Swip
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.action_favorite -> {
-                Toast.makeText(baseContext, "Favs", Toast.LENGTH_SHORT).show()
+            R.id.action_favourite -> {
+                viewModel.onFavouritePressed()
             }
         }
         return true
     }
+
 }
 
 fun View.display() {

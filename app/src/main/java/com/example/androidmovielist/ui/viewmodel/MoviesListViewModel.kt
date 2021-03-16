@@ -13,11 +13,12 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
     ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
-    var mutableMovieList = MutableLiveData<List<MoviesRowViewModel>>()
 
-    val movieList: LiveData<List<MoviesRowViewModel>> by lazy {
-        mutableMovieList
-    }
+    private var mutableMovieList = MutableLiveData<List<MoviesRowViewModel>>()
+    private var mutableFavouriteToggle = MutableLiveData<Boolean>(false)
+
+    val movieList: LiveData<List<MoviesRowViewModel>> by lazy { mutableMovieList }
+    val favouriteToggle: LiveData<Boolean> = mutableFavouriteToggle
 
     fun loadMoviesList() {
         compositeDisposable.add(repository.loadTopMovies()
@@ -51,4 +52,9 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
         super.onCleared()
         compositeDisposable.clear()
     }
+
+    fun onFavouritePressed() {
+        mutableFavouriteToggle.postValue(!(mutableFavouriteToggle.value as Boolean))
+    }
+
 }
