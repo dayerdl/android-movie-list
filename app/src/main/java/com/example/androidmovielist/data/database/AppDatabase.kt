@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        private lateinit var instance: AppDatabase
+        private var instance: AppDatabase? = null
 
         fun getInstance(applicationContext: Context): AppDatabase {
             if (instance == null) {
@@ -18,7 +18,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java, "movies"
                 ).build()
             }
-            return instance
+            return instance as AppDatabase
         }
     }
 

@@ -41,7 +41,7 @@ class MovieRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.rating.text = item.rating
         Glide
             .with(itemView.context)
-            .load(item.imageUrl)
+            .load("https://image.tmdb.org/t/p/w300"+ item.imageUrl)
             .centerCrop()
             .placeholder(R.drawable.movie_placeholder)
             .into(itemView.image_movie);

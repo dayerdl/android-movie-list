@@ -26,25 +26,4 @@ interface MoviesService {
         @Query("api_key") apiKey: String = "07473a01a734d6aa462ef4b401276805"
     ): Observable<Movie>
 
-    companion object {
-        private var BASE_URL = "https://api.themoviedb.org/3/"
-        private var retrofit: Retrofit? = null
-        fun getClient(): Retrofit {
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.apply { interceptor.level = HttpLoggingInterceptor.Level.BODY }
-            val client = OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build()
-            if (retrofit == null) {
-                retrofit = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build()
-            }
-            return retrofit!!
-        }
-    }
-
 }

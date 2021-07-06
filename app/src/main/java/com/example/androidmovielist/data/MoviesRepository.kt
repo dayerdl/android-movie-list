@@ -1,5 +1,6 @@
 package com.example.androidmovielist.data
 
+import androidx.lifecycle.LiveData
 import com.example.androidmovielist.data.api.MoviesApiManager
 import com.example.androidmovielist.data.database.LocalMovie
 import com.example.domain.movies.IMovie
@@ -23,7 +24,7 @@ class MoviesRepository @Inject constructor(private val service: MoviesApiManager
         cache.insertMovie(movie)
     }
 
-    fun loadUserSavedMovies(): Single<List<LocalMovie>> {
-        return Single.fromObservable(Observable.fromArray(cache.loadMovies()))
+    fun loadUserSavedMovies(): LiveData<List<LocalMovie>> {
+        return cache.loadMovies()
     }
 }

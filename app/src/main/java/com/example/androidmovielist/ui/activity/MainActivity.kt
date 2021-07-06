@@ -47,10 +47,16 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack,
 
         viewModel.favouriteToggle.observe(this, Observer {
             if (it == true) {
-                toolbar.menu.getItem(0).icon = ContextCompat.getDrawable(this, R.drawable.ic_love_filled)
-                viewModel.loadFavourites()
+                toolbar.menu.getItem(0).icon =
+                    ContextCompat.getDrawable(this, R.drawable.ic_love_filled)
+                viewModel.loadFavourites().observe(this, Observer { favs ->
+                    listOfMovies.adapter = MovieListAdapter(favs, this)
+                })
             } else {
                 toolbar.menu.getItem(0).icon = ContextCompat.getDrawable(this, R.drawable.ic_love)
+                viewModel.movieList.observe(this, Observer { completeList ->
+                    listOfMovies.adapter = MovieListAdapter(completeList, this)
+                })
             }
         })
 

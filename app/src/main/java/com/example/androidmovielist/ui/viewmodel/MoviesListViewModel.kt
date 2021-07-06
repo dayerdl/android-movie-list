@@ -1,8 +1,6 @@
 package com.example.androidmovielist.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.androidmovielist.data.MoviesRepository
 import com.example.androidmovielist.data.database.LocalMovie
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,7 +25,13 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
             .observeOn(AndroidSchedulers.mainThread())
             .map { result ->
                 result.results.map { item ->
-                    MoviesRowViewModel(item.backdrop_path, item.title, item.vote_average.toString(), false)
+                    MoviesRowViewModel(
+                        item.id,
+                        item.backdrop_path,
+                        item.title,
+                        item.vote_average.toString(),
+                        false
+                    )
                 }
             }
             .subscribe { item ->
@@ -36,11 +40,11 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
         )
     }
 
-    fun loadDetailsFirstTopRatedMovie(){
+    fun loadDetailsFirstTopRatedMovie() {
         compositeDisposable.add(repository.loadTopMovies()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
-            .map { results -> results.results.first()}
+            .map { results -> results.results.first() }
             .flatMap { repository.loadMovieDetails(it.id) }
             .subscribe { item ->
                 println("ZAXA----> $item")
@@ -59,19 +63,22 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
     }
 
     fun save(item: MoviesRowViewModel) {
-        val movie = LocalMovie(Math.random().toInt(), item.title, "dummy")
+        val movie = LocalMovie(id = item.id, title = item.title)
         repository.saveMovie(movie)
     }
 
-    fun loadFavourites() {
-        compositeDisposable.add(repository.loadUserSavedMovies()
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .subscribe { item ->
-                println("ZAXA----> $item")
+    fun loadFavourites(): LiveData<List<MoviesRowViewModel>> {
+        return Transformations.map(repository.loadUserSavedMovies()) { list ->
+            list.map {
+                MoviesRowViewModel(
+                    id = it.id,
+                    imageUrl = "",
+                    title = "",
+                    rating = it.vote_average.toString(),
+                    isFavourite = true
+                )
             }
-        )
-
+        }
     }
 
 }
