@@ -3,8 +3,12 @@ package com.example.androidmovielist.ui.viewmodel
 import androidx.lifecycle.*
 import com.example.androidmovielist.data.MoviesRepository
 import com.example.androidmovielist.data.database.LocalMovie
+import com.example.domain.movies.ITopRatedResults
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -20,7 +24,12 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
     val favouriteToggle: LiveData<Boolean> = mutableFavouriteToggle
 
     fun loadMoviesList() {
-        compositeDisposable.add(repository.loadTopMovies()
+        compositeDisposable.add(
+//            Observable.zip(repository.loadTopMovies().toFlowable(),
+//                repository.loadUserSavedMovies(),
+//                BiFunction { t1:ITopRatedResults, t2:ITopRatedResults -> return@BiFunction setFavourites(t1,t2) }
+//            )
+            repository.loadTopMovies()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { result ->
@@ -38,6 +47,10 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
                 mutableMovieList.value = item
             }
         )
+    }
+
+    private fun setFavourites(t1: ITopRatedResults, t2: ITopRatedResults): ITopRatedResults {
+        return t1
     }
 
     fun loadDetailsFirstTopRatedMovie() {
@@ -65,19 +78,25 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
     fun save(item: MoviesRowViewModel) {
         val movie = LocalMovie(id = item.id, title = item.title)
         repository.saveMovie(movie)
+        item.isFavourite = true
+
     }
 
-    fun loadFavourites(): LiveData<List<MoviesRowViewModel>> {
-        return Transformations.map(repository.loadUserSavedMovies()) { list ->
-            list.map {
-                MoviesRowViewModel(
-                    id = it.id,
-                    imageUrl = "",
-                    title = "",
-                    rating = it.vote_average.toString(),
-                    isFavourite = true
-                )
-            }
+    fun loadFavourites(): Single<ArrayList<MoviesRowViewModel>> {
+        return repository.loadUserSavedMovies()
+            .map {
+                val list = ArrayList<MoviesRowViewModel>()
+                for(movie in it) {
+                    val movie = MoviesRowViewModel(
+                        id = movie.id,
+                        imageUrl = "",
+                        title = "",
+                        rating = movie.vote_average.toString(),
+                        isFavourite = true
+                    )
+                    list.add(movie)
+                }
+                list
         }
     }
 

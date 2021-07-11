@@ -17,6 +17,8 @@ import com.example.androidmovielist.ui.viewmodel.MoviesListViewModel
 import com.example.androidmovielist.ui.viewmodel.MoviesRowViewModel
 import com.example.moviedetail.di.MovieDetailActivity
 import dagger.android.support.DaggerAppCompatActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -49,9 +51,14 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack,
             if (it == true) {
                 toolbar.menu.getItem(0).icon =
                     ContextCompat.getDrawable(this, R.drawable.ic_love_filled)
-                viewModel.loadFavourites().observe(this, Observer { favs ->
-                    listOfMovies.adapter = MovieListAdapter(favs, this)
-                })
+                viewModel.loadFavourites()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe { it ->
+                            listOfMovies.adapter = MovieListAdapter(it, this)
+                            Toast.makeText(this, "${it.size}", Toast.LENGTH_SHORT).show()
+                    }
+
             } else {
                 toolbar.menu.getItem(0).icon = ContextCompat.getDrawable(this, R.drawable.ic_love)
                 viewModel.movieList.observe(this, Observer { completeList ->
@@ -71,6 +78,7 @@ class MainActivity : DaggerAppCompatActivity(), MovieRowViewHolderCallBack,
 
     override fun clickOnFavouriteItem(item: MoviesRowViewModel) {
         viewModel.save(item)
+        listOfMovies.adapter?.notifyDataSetChanged()
     }
 
     override fun clickOnMovieItem(item: MoviesRowViewModel) {
