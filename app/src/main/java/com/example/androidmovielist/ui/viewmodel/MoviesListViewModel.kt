@@ -3,6 +3,7 @@ package com.example.androidmovielist.ui.viewmodel
 import androidx.lifecycle.*
 import com.example.androidmovielist.data.MoviesRepository
 import com.example.androidmovielist.data.database.LocalMovie
+import com.example.domain.movies.IMovie
 import com.example.domain.movies.ITopRatedResults
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -25,32 +26,40 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
 
     fun loadMoviesList() {
         compositeDisposable.add(
-//            Observable.zip(repository.loadTopMovies().toFlowable(),
-//                repository.loadUserSavedMovies(),
-//                BiFunction { t1:ITopRatedResults, t2:ITopRatedResults -> return@BiFunction setFavourites(t1,t2) }
-//            )
-            repository.loadTopMovies()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map { result ->
-                result.results.map { item ->
-                    MoviesRowViewModel(
-                        item.id,
-                        item.backdrop_path,
-                        item.title,
-                        item.vote_average.toString(),
-                        false
+            Observable.zip(repository.loadTopMovies().toObservable(),
+                repository.loadUserSavedMovies().toObservable(),
+                BiFunction { t1: ITopRatedResults, t2: List<LocalMovie> ->
+                    return@BiFunction setFavourites(
+                        t1,
+                        t2
                     )
                 }
-            }
-            .subscribe { item ->
-                mutableMovieList.value = item
-            }
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { item ->
+                    mutableMovieList.value = item
+                }
         )
     }
 
-    private fun setFavourites(t1: ITopRatedResults, t2: ITopRatedResults): ITopRatedResults {
-        return t1
+    private fun setFavourites(
+        topMovies: ITopRatedResults,
+        favourites: List<LocalMovie>
+    ): List<MoviesRowViewModel> {
+        val list = arrayListOf<MoviesRowViewModel>()
+        for (m in topMovies.results) {
+            val movie = MoviesRowViewModel(
+                m.id,
+                m.backdrop_path,
+                m.title,
+                m.vote_average.toString(),
+                favourites.containsMovie(m)
+            )
+            list.add(movie)
+        }
+
+        return list
     }
 
     fun loadDetailsFirstTopRatedMovie() {
@@ -86,7 +95,7 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
         return repository.loadUserSavedMovies()
             .map {
                 val list = ArrayList<MoviesRowViewModel>()
-                for(movie in it) {
+                for (movie in it) {
                     val movie = MoviesRowViewModel(
                         id = movie.id,
                         imageUrl = "",
@@ -97,7 +106,16 @@ class MoviesListViewModel @Inject constructor(private val repository: MoviesRepo
                     list.add(movie)
                 }
                 list
-        }
+            }
     }
 
+}
+
+private fun List<LocalMovie>.containsMovie(m: IMovie): Boolean {
+    for (movie in this) {
+        if (movie.id == m.id) {
+            return true
+        }
+    }
+    return false
 }
